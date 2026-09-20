@@ -47,8 +47,8 @@ export default function App() {
             onEdit={() => openModal("passenger", "edit")}
           />
           <SlotsSection
-            onCreate={() => openModal("slot")}
-            onEdit={() => openModal("slot", "edit")}
+            onAddSlot={() => openModal("slot")}
+            onEditSlot={() => openModal("slot", "edit")}
           />
           <div className="col-layout">
             <RoutesSection
