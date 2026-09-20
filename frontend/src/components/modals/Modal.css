@@ -1,0 +1,129 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(11, 20, 38, .46);
+  backdrop-filter: blur(7px);
+}
+
+.modal-card {
+  position: relative;
+  width: min(440px, 100%);
+  padding: 25px;
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 28px 70px rgba(11,20,38,.24);
+  animation: modal-in .18s ease-out;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 9px;
+  color: #8992a6;
+  background: #f4f6fa;
+  font-size: 20px;
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.modal-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--modal-accent);
+  background: color-mix(in srgb, var(--modal-accent) 11%, white);
+  font-size: 19px;
+}
+
+.modal-title-row h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.modal-title-row p {
+  margin: 4px 0 0;
+  color: #8a93a8;
+  font-size: 12px;
+}
+
+.form-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.field label {
+  color: #34405a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #dfe4ed;
+  border-radius: 10px;
+  outline: none;
+  color: #34405a;
+  background: #fbfcfe;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--modal-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--modal-accent) 10%, transparent);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 23px;
+}
+
+.modal-actions button {
+  height: 40px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cancel-button {
+  color: #536079;
+  background: #eef1f6;
+}
+
+.save-button {
+  color: #fff;
+  background: var(--modal-accent);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--modal-accent) 22%, transparent);
+}
