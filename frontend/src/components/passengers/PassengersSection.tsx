@@ -1,38 +1,44 @@
 import SectionCard from "../common/SectionCard";
 import DataTable from "../common/DataTable";
 import "./PassengersSection.css";
-
-type Passenger = { id: number; name: string; route: string };
-
-const rows: Passenger[] = [
-  { id: 1, name: "John Doe", route: "Yellow" },
-  { id: 2, name: "Priya Sharma", route: "Red" },
-  { id: 3, name: "Alex Kim", route: "Blue" },
-  { id: 4, name: "Neha Verma", route: "Yellow" },
-  { id: 5, name: "Rahul Das", route: "Red" },
-];
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useEffect } from "react";
+import { getPassengers } from "../../redux/slices/passengers.slice";
 
 type Props = { onCreate: () => void; onEdit: () => void };
 
 export default function PassengersSection({ onCreate, onEdit }: Props) {
+  const dispatch = useAppDispatch();
+  const { data: passengers, isLoading } = useAppSelector(
+    (state) => state.passengers,
+  );
+
+  useEffect(() => {
+    dispatch(getPassengers());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <SectionCard
       id="passengers"
       title="Passengers"
       icon="♙"
-      count={rows.length}
+      count={passengers.length}
       accent="#4d8cf5"
       buttonLabel="Add Passenger"
       onCreate={onCreate}
     >
       <DataTable
-        rows={rows}
+        rows={passengers}
         onEdit={onEdit}
         onDelete={() => {}}
         columns={[
-          { key: "id", label: "ID", render: row => row.id },
-          { key: "name", label: "Name", render: row => row.name },
-          { key: "route", label: "Route", render: row => row.route },
+          { key: "id", label: "ID", render: (row) => row.id },
+          { key: "name", label: "Name", render: (row) => row.name },
+          { key: "route", label: "Route", render: (row) => row.route.line },
         ]}
       />
     </SectionCard>

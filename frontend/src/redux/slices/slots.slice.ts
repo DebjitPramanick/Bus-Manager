@@ -4,14 +4,14 @@ import type { BusSlot, BusSlotCreate, BusSlotUpdate } from "../../types";
 
 export const getSlots = createAsyncThunk("slots/getSlots", async () => {
   const response = await api.getSlots();
-  return response.data;
+  return response;
 });
 
 export const addSlot = createAsyncThunk(
   "slots/addSlot",
   async (slot: BusSlotCreate) => {
     const response = await api.addSlot(slot);
-    return response.data;
+    return response;
   },
 );
 
@@ -19,7 +19,7 @@ export const updateSlot = createAsyncThunk(
   "slots/updateSlot",
   async ({ id, slot }: { id: string; slot: BusSlotUpdate }) => {
     const response = await api.updateSlot(id, slot);
-    return response.data;
+    return response;
   },
 );
 

@@ -4,14 +4,14 @@ import type { Bus, BusCreate, BusUpdate } from "../../types";
 
 export const getBuses = createAsyncThunk("buses/getBuses", async () => {
   const response = await api.getBuses();
-  return response.data;
+  return response;
 });
 
 export const addBus = createAsyncThunk(
   "buses/addBus",
   async (bus: BusCreate) => {
     const response = await api.addBus(bus);
-    return response.data;
+    return response;
   },
 );
 
@@ -19,7 +19,7 @@ export const updateBus = createAsyncThunk(
   "buses/updateBus",
   async ({ id, bus }: { id: string; bus: BusUpdate }) => {
     const response = await api.updateBus(id, bus);
-    return response.data;
+    return response;
   },
 );
 

@@ -6,7 +6,7 @@ export const getPassengers = createAsyncThunk(
   "passengers/getPassengers",
   async () => {
     const response = await api.getPassengers();
-    return response.data;
+    return response;
   },
 );
 
@@ -14,7 +14,7 @@ export const addPassenger = createAsyncThunk(
   "passengers/addPassenger",
   async (passenger: PassengerCreate) => {
     const response = await api.addPassenger(passenger);
-    return response.data;
+    return response;
   },
 );
 
@@ -22,7 +22,7 @@ export const updatePassenger = createAsyncThunk(
   "passengers/updatePassenger",
   async ({ id, passenger }: { id: string; passenger: PassengerUpdate }) => {
     const response = await api.updatePassenger(id, passenger);
-    return response.data;
+    return response;
   },
 );
 

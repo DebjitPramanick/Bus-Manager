@@ -4,14 +4,14 @@ import type { Route, RouteCreate } from "../../types";
 
 export const getRoutes = createAsyncThunk("routes/getRoutes", async () => {
   const response = await api.getRoutes();
-  return response.data;
+  return response;
 });
 
 export const addRoute = createAsyncThunk(
   "routes/addRoute",
   async (route: RouteCreate) => {
     const response = await api.addRoute(route);
-    return response.data;
+    return response;
   },
 );
 

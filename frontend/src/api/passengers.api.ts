@@ -2,6 +2,8 @@ import type { PassengerCreate, PassengerUpdate } from "../types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+console.log(API_URL);
+
 export const getPassengers = async () => {
   const response = await fetch(`${API_URL}/passengers`);
   return response.json();

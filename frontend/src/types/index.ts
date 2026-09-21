@@ -14,6 +14,7 @@ export type Passenger = {
   name: string;
   route_id: string;
   bus_id: string | null;
+  route: Route;
 };
 
 export type PassengerCreate = Pick<Passenger, "name" | "route_id">;
@@ -27,6 +28,7 @@ export type BusSlot = {
   slot_number: number;
   is_occupied: boolean;
   bus_id: string;
+  bus: Bus;
 };
 
 export type BusSlotCreate = Pick<BusSlot, "slot_number" | "bus_id">;
