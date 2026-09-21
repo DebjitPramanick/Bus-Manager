@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from pyexpat import model
+from fastapi import APIRouter, HTTPException
 import schemas
 import models
 from database import db_dependency
@@ -17,3 +18,17 @@ def create_slots(slot: schemas.BusSlotCreate, db: db_dependency):
     db.commit()
     db.refresh(new_slot)
     return new_slot
+
+@router.post("/assign", response_model=schemas.BusSlotPopulated)
+def assign_bus(assign: schemas.BusSlotAssign, db: db_dependency):
+    slot = db.query(models.BusSlot).filter(models.BusSlot.id == assign.slot_id).first()
+    if not slot:
+        raise HTTPException(status_code=404, detail="Slot not found")
+    bus = db.query(models.Bus).filter(models.Bus.id == assign.bus_id).first()
+    if not bus:
+        raise HTTPException(status_code=404, detail="Bus not found")
+    slot.bus_id = bus.id
+    slot.is_occupied = True
+    db.commit()
+    db.refresh(slot)
+    return slot

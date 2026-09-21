@@ -2,17 +2,10 @@ import { useEffect, useState } from "react";
 import "./SlotsSection.css";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getSlots } from "../../redux/slices/slots.slice";
-
-export type BusSlot = {
-  id: number;
-  route: string | null;
-  bus: string | null;
-  capacity: number;
-  passengers: number;
-};
+import type { BusSlot } from "../../types";
+import AssignBus from "./components/AssignBus";
 
 type Props = {
-  slots?: BusSlot[];
   onAddSlot?: () => void;
   onEditSlot?: (slot: BusSlot) => void;
   onDeleteSlot?: (slot: BusSlot) => void;
@@ -25,12 +18,8 @@ export default function SlotsSection({
 }: Props) {
   const dispatch = useAppDispatch();
   const { data: slots, isLoading } = useAppSelector((state) => state.slots);
-  const [selectedSlot, setSelectedSlot] = useState<BusSlot | null>(null);
 
-  // const handleEdit = (slot: BusSlot) => {
-  //   setSelectedSlot(slot);
-  //   onEditSlot?.(slot);
-  // };
+  const [selectedSlot, setSelectedSlot] = useState<BusSlot | null>(null);
 
   useEffect(() => {
     dispatch(getSlots());
@@ -73,7 +62,7 @@ export default function SlotsSection({
             >
               <div className="slot-number">
                 <span>Slot</span>
-                <strong>{String(slot.id).padStart(2, "0")}</strong>
+                <strong>{String(slot.slot_number).padStart(2, "0")}</strong>
               </div>
 
               <div className="slot-main">
@@ -139,15 +128,7 @@ export default function SlotsSection({
               </div>
 
               <div className="slot-actions">
-                {!isOccupied ? (
-                  <button
-                    type="button"
-                    className="slot-assign-button"
-                    // onClick={() => handleEdit(slot)}
-                  >
-                    Assign bus
-                  </button>
-                ) : (
+                {isOccupied ? (
                   <>
                     <button
                       type="button"
@@ -167,6 +148,8 @@ export default function SlotsSection({
                       ⌫
                     </button>
                   </>
+                ) : (
+                  <AssignBus slot={slot} />
                 )}
               </div>
             </article>

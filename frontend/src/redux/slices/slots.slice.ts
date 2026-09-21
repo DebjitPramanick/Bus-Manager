@@ -23,6 +23,14 @@ export const updateSlot = createAsyncThunk(
   },
 );
 
+export const assignBusToSlot = createAsyncThunk(
+  "slots/assignBusToSlot",
+  async ({ bus_id, slot_id }: { bus_id: number; slot_id: number }) => {
+    const response = await api.assignBusToSlot(bus_id, slot_id);
+    return response;
+  },
+);
+
 export const slotsSlice = createSlice({
   name: "slots",
   initialState: {
@@ -53,6 +61,20 @@ export const slotsSlice = createSlice({
       state.data.push(action.payload);
     });
     builder.addCase(addSlot.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? undefined;
+    });
+    builder.addCase(assignBusToSlot.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+    builder.addCase(assignBusToSlot.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.data = state.data.map((slot) =>
+        slot.id === action.payload.id ? action.payload : slot,
+      );
+    });
+    builder.addCase(assignBusToSlot.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? undefined;
     });

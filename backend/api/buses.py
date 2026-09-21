@@ -5,7 +5,7 @@ from database import db_dependency
 
 router = APIRouter(prefix="/buses", tags=["buses"])
 
-@router.get("/", response_model=list[schemas.Bus])
+@router.get("/", response_model=list[schemas.BusPopulated])
 def get_buses(db: db_dependency):
     buses = db.query(models.Bus).all()
     return buses

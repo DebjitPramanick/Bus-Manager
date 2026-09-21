@@ -14,7 +14,7 @@ type Props<T> = {
   onDelete: (row: T) => void;
 };
 
-export default function DataTable<T extends { id: string }>({
+export default function DataTable<T extends { id: number }>({
   columns,
   rows,
   onEdit,

@@ -29,3 +29,14 @@ export const deleteSlot = async (id: string) => {
   });
   return response.json();
 };
+
+export const assignBusToSlot = async (bus_id: number, slot_id: number) => {
+  const response = await fetch(`${API_URL}/slots/assign`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ bus_id, slot_id }),
+  });
+  return response.json();
+};

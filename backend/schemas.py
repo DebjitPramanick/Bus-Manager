@@ -75,3 +75,7 @@ class BusPopulated(BaseModel):
     model_config = {
         "from_attributes": True,
     }
+
+class BusSlotAssign(BaseModel):
+    bus_id: int
+    slot_id: int

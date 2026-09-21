@@ -1,8 +1,9 @@
 export type Bus = {
-  id: string;
+  id: number;
   name: string;
   route_id: string;
   capacity: number;
+  route: Route;
 };
 
 export type BusCreate = Pick<Bus, "name" | "route_id" | "capacity">;
@@ -10,11 +11,12 @@ export type BusCreate = Pick<Bus, "name" | "route_id" | "capacity">;
 export type BusUpdate = Partial<BusCreate>;
 
 export type Passenger = {
-  id: string;
+  id: number;
   name: string;
   route_id: string;
   bus_id: string | null;
   route: Route;
+  bus: Bus;
 };
 
 export type PassengerCreate = Pick<Passenger, "name" | "route_id">;
@@ -24,7 +26,7 @@ export type PassengerUpdate = Partial<
 >;
 
 export type BusSlot = {
-  id: string;
+  id: number;
   slot_number: number;
   is_occupied: boolean;
   bus_id: string;
@@ -36,7 +38,7 @@ export type BusSlotCreate = Pick<BusSlot, "slot_number" | "bus_id">;
 export type BusSlotUpdate = Partial<BusSlotCreate>;
 
 export type Route = {
-  id: string;
+  id: number;
   line: string;
 };
 
