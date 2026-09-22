@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 import schemas
 import models
 from database import db_dependency
@@ -17,3 +17,14 @@ def create_passengers(passenger: schemas.PassengerCreate, db: db_dependency):
     db.commit()
     db.refresh(new_passenger)
     return new_passenger
+
+@router.put("/{passenger_id}", response_model=schemas.PassengerPopulated)
+def update_passenger(passenger_id: int, passenger: schemas.PassengerCreate, db: db_dependency):
+    passenger_to_update = db.query(models.Passenger).filter(models.Passenger.id == passenger_id).first()
+    if not passenger_to_update:
+        raise HTTPException(status_code=404, detail="Passenger not found")
+    passenger_to_update.name = passenger.name
+    passenger_to_update.route_id = passenger.route_id
+    db.commit()
+    db.refresh(passenger_to_update)
+    return passenger_to_update
