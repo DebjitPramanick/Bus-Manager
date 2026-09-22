@@ -1,6 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import * as api from "../../api";
-import type { Bus, BusCreate, BusUpdate } from "../../types";
+import type { Bus, BusCreate, BusUpdate, StoreState } from "../../types";
 
 export const getBuses = createAsyncThunk("buses/getBuses", async () => {
   const response = await api.getBuses();
@@ -20,6 +24,13 @@ export const updateBus = createAsyncThunk(
   async ({ id, bus }: { id: string; bus: BusUpdate }) => {
     const response = await api.updateBus(id, bus);
     return response;
+  },
+);
+
+export const availableBusesSelector = createSelector(
+  [(state: StoreState) => state.buses.data],
+  (buses) => {
+    return buses.filter((bus) => bus.is_available);
   },
 );
 

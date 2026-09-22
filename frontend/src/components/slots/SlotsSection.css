@@ -158,13 +158,11 @@
   gap: 28px;
 }
 
-.slot-route,
-.slot-bus,
-.slot-capacity {
+.slot-metadata {
   min-width: 0;
 }
 
-.slot-label {
+.metadata-label {
   display: block;
   margin-bottom: 8px;
   color: #99a2b4;
@@ -174,87 +172,14 @@
   text-transform: uppercase;
 }
 
-.route-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: #34415c;
-  font-size: 14px;
-  font-weight: 650;
-}
-
-.route-pill i {
-  width: 8px;
-  height: 8px;
-  display: inline-block;
-  border-radius: 50%;
-  background: #f1b929;
-}
-
-.route-pill--red i {
-  background: #ef5a68;
-}
-
-.route-pill--blue i {
-  background: #5289f3;
-}
-
-.slot-bus strong {
-  color: #34415c;
-  font-size: 15px;
-}
-
-.slot-muted {
+.metadata-value-muted {
   color: #a1a8b5 !important;
   font-weight: 550 !important;
 }
 
-.capacity-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.capacity-top .slot-label {
-  margin-bottom: 7px;
-}
-
-.capacity-value {
-  color: #526079;
-  font-size: 11px;
-  font-weight: 750;
-}
-
-.capacity-track {
-  width: 100%;
-  height: 7px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #edf0f4;
-}
-
-.capacity-fill {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: #55c89d;
-  transition: width 250ms ease;
-}
-
-.capacity-fill--full {
-  background: #ee6975;
-}
-
-.capacity-fill--empty {
-  background: transparent;
-}
-
-.slot-capacity small {
-  display: block;
-  margin-top: 7px;
-  color: #8f98aa;
-  font-size: 10px;
+.metadata-value {
+  color: #34415c;
+  font-size: 15px;
 }
 
 .slot-actions {

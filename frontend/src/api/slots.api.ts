@@ -40,3 +40,8 @@ export const assignBusToSlot = async (bus_id: number, slot_id: number) => {
   });
   return response.json();
 };
+
+export const getSlotStatus = async () => {
+  const response = await fetch(`${API_URL}/slots/status`);
+  return response.json();
+};

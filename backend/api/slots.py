@@ -29,6 +29,23 @@ def assign_bus(assign: schemas.BusSlotAssign, db: db_dependency):
         raise HTTPException(status_code=404, detail="Bus not found")
     slot.bus_id = bus.id
     slot.is_occupied = True
+    bus.is_available = False
     db.commit()
     db.refresh(slot)
+    db.refresh(bus)
     return slot
+
+@router.get("/status", response_model = schemas.BusSlotStatus)
+def get_slot_status(db: db_dependency):
+    slots = db.query(models.BusSlot).all()
+
+    filling_status = {}
+    for slot in slots:
+        filling_status[slot.id] = []
+        if slot.is_occupied:
+            bus = db.query(models.Bus).filter(models.Bus.id == slot.bus_id).first()
+            n_passengers = db.query(models.Passenger).filter(models.Passenger.bus_id == slot.bus_id).count()
+
+            filling_status[slot.id] = [n_passengers, bus.capacity]
+
+    return schemas.BusSlotStatus(filling_status=filling_status)

@@ -1,12 +1,12 @@
 export type Bus = {
   id: number;
-  name: string;
   route_id: string;
   capacity: number;
   route: Route;
+  is_available: boolean;
 };
 
-export type BusCreate = Pick<Bus, "name" | "route_id" | "capacity">;
+export type BusCreate = Pick<Bus, "route_id" | "capacity">;
 
 export type BusUpdate = Partial<BusCreate>;
 
@@ -68,4 +68,17 @@ export type RoutesState = {
   data: Route[];
   isLoading: boolean;
   error: string | undefined;
+};
+
+export type StoreState = {
+  passengers: PassengersState;
+  buses: BusesState;
+  routes: RoutesState;
+  slots: BusSlotsState;
+};
+
+export type BusSlotsStatus = {
+  filling_status?: {
+    [slot_id: number]: [number, number];
+  };
 };

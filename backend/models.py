@@ -6,7 +6,8 @@ class Bus(Base):
     __tablename__ = "buses"
     id = Column(Integer, primary_key=True, index=True)
     route_id = Column(Integer, ForeignKey("routes.id"),nullable=False)
-    capacity = Column(Integer, index=True, nullable=False, default=10)
+    capacity = Column[int](Integer, index=True, nullable=False, default=10)
+    is_available = Column(Boolean, index=True, nullable=False, default=True)
     route = relationship("Route")
 
 class BusSlot(Base):

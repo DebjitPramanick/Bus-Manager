@@ -28,3 +28,16 @@ def update_passenger(passenger_id: int, passenger: schemas.PassengerCreate, db: 
     db.commit()
     db.refresh(passenger_to_update)
     return passenger_to_update
+
+@router.patch("/assign", response_model=schemas.PassengerPopulated)
+def assign_passenger(assign: schemas.PassengerAssign, db: db_dependency):
+    passenger = db.query(models.Passenger).filter(models.Passenger.id == assign.passenger_id).first()
+    if not passenger:
+        raise HTTPException(status_code=404, detail="Passenger not found")
+    bus = db.query(models.Bus).filter(models.Bus.id == assign.bus_id).first()
+    if not bus:
+        raise HTTPException(status_code=404, detail="Bus not found")
+    passenger.bus_id = assign.bus_id
+    db.commit()
+    db.refresh(passenger)
+    return passenger

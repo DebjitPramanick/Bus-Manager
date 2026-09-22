@@ -34,3 +34,17 @@ export const deletePassenger = async (id: string) => {
   });
   return response.json();
 };
+
+export const assignPassengerToBus = async (
+  bus_id: number,
+  passenger_id: number,
+) => {
+  const response = await fetch(`${API_URL}/passengers/assign`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ bus_id, passenger_id }),
+  });
+  return response.json();
+};

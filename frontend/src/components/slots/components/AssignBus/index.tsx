@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { assignBusToSlot } from "../../../../redux/slices/slots.slice";
 import "./index.css";
+import { availableBusesSelector } from "../../../../redux/slices/buses.slice";
 
 type Props = {
   slot: BusSlot;
@@ -12,9 +13,7 @@ type Props = {
 const AssignBus = ({ slot }: Props) => {
   const dispatch = useAppDispatch();
 
-  const { data: buses, isLoading: isBusesLoading } = useAppSelector(
-    (state) => state.buses,
-  );
+  const availableBuses = useAppSelector(availableBusesSelector);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [position, setPosition] = useState<{
@@ -54,7 +53,7 @@ const AssignBus = ({ slot }: Props) => {
         </div>
 
         <div className="bus-dropdown-list">
-          {buses.map((bus) => (
+          {availableBuses.map((bus) => (
             <button
               type="button"
               className="bus-option"
@@ -64,10 +63,10 @@ const AssignBus = ({ slot }: Props) => {
               <span className="bus-option-icon">🚌</span>
 
               <span className="bus-option-content">
-                <strong>{bus.name}</strong>
-                <small>
-                  {bus.route.line} · {bus.capacity} seats
-                </small>
+                <strong>
+                  {bus.id} - {bus.route.line}
+                </strong>
+                <small>{bus.capacity} seats</small>
               </span>
 
               <span className="bus-option-arrow">→</span>
@@ -86,7 +85,6 @@ const AssignBus = ({ slot }: Props) => {
           className="slot-assign-button"
           onClick={() => setIsDropdownOpen((p) => !p)}
           ref={assignBusButtonRef}
-          disabled={isBusesLoading}
         >
           Assign bus
           <span className="slot-assign-chevron">⌄</span>

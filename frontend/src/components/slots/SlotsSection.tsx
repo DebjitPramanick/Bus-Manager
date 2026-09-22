@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import "./SlotsSection.css";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getSlots } from "../../redux/slices/slots.slice";
-import type { BusSlot } from "../../types";
+import type { BusSlot, BusSlotsStatus } from "../../types";
 import AssignBus from "./components/AssignBus";
+import { getSlotStatus } from "../../api/slots.api";
 
 type Props = {
   onAddSlot?: () => void;
@@ -20,9 +21,21 @@ export default function SlotsSection({
   const { data: slots, isLoading } = useAppSelector((state) => state.slots);
 
   const [selectedSlot, setSelectedSlot] = useState<BusSlot | null>(null);
+  const [slotsStatus, setSlotsStatus] = useState<BusSlotsStatus>({});
+
+  const fetchSlotsStatus = async () => {
+    try {
+      const response = await getSlotStatus();
+      setSlotsStatus(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getSlots());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchSlotsStatus();
   }, []);
 
   if (isLoading) {
@@ -52,8 +65,10 @@ export default function SlotsSection({
       <div className="slots-list">
         {slots.map((slot) => {
           const isOccupied = slot.is_occupied;
-          // const isFull = isOccupied && slot.passengers >= slot.capacity;
-          // const availableSeats = Math.max(slot.capacity - slot.passengers, 0);
+
+          const slotStatus = slotsStatus.filling_status?.[slot.id];
+          const nPassengers = slotStatus?.[0] ?? 0;
+          const capacity = slotStatus?.[1] ?? 0;
 
           return (
             <article
@@ -66,64 +81,33 @@ export default function SlotsSection({
               </div>
 
               <div className="slot-main">
-                <div className="slot-route">
-                  <span className="slot-label">Route</span>
-
-                  {/* {isOccupied ? (
-                    <span
-                      className={`route-pill route-pill--${slot.route?.toLowerCase()}`}
-                    >
-                      <i />
-                      N/A
-                    </span>
-                  ) : (
-                    <span className="slot-muted">No route assigned</span>
-                  )} */}
+                <div className="slot-metadata">
+                  <span className="metadata-label">Route</span>
+                  <strong
+                    className={
+                      !isOccupied ? "metadata-value-muted" : "metadata-value"
+                    }
+                  >
+                    {slot.bus?.route?.line ?? "N/A"}
+                  </strong>
                 </div>
 
-                <div className="slot-bus">
-                  <span className="slot-label">Bus</span>
-                  {/* <strong className={isEmpty ? "slot-muted" : ""}>
-                    {slot.bus ?? "Empty"}
-                  </strong> */}
+                <div className="slot-metadata">
+                  <span className="metadata-label">Bus ID</span>
+                  <strong
+                    className={
+                      !isOccupied ? "metadata-value-muted" : "metadata-value"
+                    }
+                  >
+                    {slot.bus?.id ?? "N/A"}
+                  </strong>
                 </div>
 
-                <div className="slot-capacity">
-                  <div className="capacity-top">
-                    <span className="slot-label">Capacity</span>
-
-                    {isOccupied && (
-                      <span className="capacity-value">10/40</span>
-                    )}
-                  </div>
-
-                  {/* <div className="capacity-track">
-                    <span
-                      className={`capacity-fill ${
-                        !isOccupied
-                          ? "capacity-fill--empty"
-                          : isFull
-                            ? "capacity-fill--full"
-                            : ""
-                      }`}
-                      style={{
-                        width: !isOccupied
-                          ? "0%"
-                          : `${Math.min(
-                              (slot.passengers / slot.capacity) * 100,
-                              100,
-                            )}%`,
-                      }}
-                    />
-                  </div> */}
-
-                  {/* <small>
-                    {isEmpty
-                      ? "Waiting for bus"
-                      : isFull
-                        ? "Full"
-                        : `${availableSeats} seats available`}
-                  </small> */}
+                <div className="slot-metadata">
+                  <span className="metadata-label">Filled</span>
+                  <strong className={!isOccupied ? "metadata-value-muted" : ""}>
+                    {nPassengers} / {capacity}
+                  </strong>
                 </div>
               </div>
 
