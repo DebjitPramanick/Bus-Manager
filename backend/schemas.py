@@ -82,6 +82,10 @@ class BusSlotAssign(BaseModel):
     bus_id: int
     slot_id: int
 
+class BusSlotUnassign(BaseModel):
+    bus_id: int
+    slot_id: int
+
 class PassengerAssign(BaseModel):
     passenger_id: int
     bus_id: int

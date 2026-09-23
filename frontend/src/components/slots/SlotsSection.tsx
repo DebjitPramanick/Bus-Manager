@@ -116,15 +116,6 @@ export default function SlotsSection({
                   <>
                     <button
                       type="button"
-                      className="slot-icon-button"
-                      aria-label={`Edit slot ${slot.id}`}
-                      // onClick={() => handleEdit(slot)}
-                    >
-                      ✎
-                    </button>
-
-                    <button
-                      type="button"
                       className="slot-icon-button slot-icon-button--danger"
                       aria-label={`Delete slot ${slot.id}`}
                       // onClick={() => onDeleteSlot?.(slot)}

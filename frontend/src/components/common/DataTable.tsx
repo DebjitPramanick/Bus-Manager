@@ -10,14 +10,12 @@ export type Column<T> = {
 type Props<T> = {
   columns: Column<T>[];
   rows: T[];
-  onEdit: (row: T) => void;
   onDelete: (row: T) => void;
 };
 
 export default function DataTable<T extends { id: number }>({
   columns,
   rows,
-  onEdit,
   onDelete,
 }: Props<T>) {
   return (
@@ -39,13 +37,6 @@ export default function DataTable<T extends { id: number }>({
               ))}
               <td>
                 <div className="row-actions">
-                  <button
-                    className="icon-action edit"
-                    aria-label="Edit"
-                    onClick={() => onEdit(row)}
-                  >
-                    ✎
-                  </button>
                   <button
                     className="icon-action delete"
                     aria-label="Delete"

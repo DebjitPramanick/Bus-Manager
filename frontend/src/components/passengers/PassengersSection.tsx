@@ -5,9 +5,9 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useEffect } from "react";
 import { getPassengers } from "../../redux/slices/passengers.slice";
 
-type Props = { onCreate: () => void; onEdit: () => void };
+type Props = { onCreate: () => void };
 
-export default function PassengersSection({ onCreate, onEdit }: Props) {
+export default function PassengersSection({ onCreate }: Props) {
   const dispatch = useAppDispatch();
   const { data: passengers, isLoading } = useAppSelector(
     (state) => state.passengers,
@@ -33,12 +33,16 @@ export default function PassengersSection({ onCreate, onEdit }: Props) {
     >
       <DataTable
         rows={passengers}
-        onEdit={onEdit}
         onDelete={() => {}}
         columns={[
           { key: "id", label: "ID", render: (row) => row.id },
           { key: "name", label: "Name", render: (row) => row.name },
           { key: "route", label: "Route", render: (row) => row.route.line },
+          {
+            key: "bus",
+            label: "Bus",
+            render: (row) => (row.bus?.id ? `Bus - ${row.bus.id}` : "N/A"),
+          },
         ]}
       />
     </SectionCard>

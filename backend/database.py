@@ -12,11 +12,9 @@ Base = declarative_base()
 
 def get_db():
     db = SessionLocal()
-    print("Database connection established")
     try:
         yield db
     finally:
         db.close()
-        print("Database connection closed")
 
 db_dependency = Annotated[Session, Depends(get_db)]

@@ -5,9 +5,9 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getRoutes } from "../../redux/slices/routes.slice";
 import { useEffect } from "react";
 
-type Props = { onCreate: () => void; onEdit: () => void };
+type Props = { onCreate: () => void };
 
-export default function RoutesSection({ onCreate, onEdit }: Props) {
+export default function RoutesSection({ onCreate }: Props) {
   const dispatch = useAppDispatch();
   const { data: routes, isLoading } = useAppSelector((state) => state.routes);
 
@@ -31,7 +31,6 @@ export default function RoutesSection({ onCreate, onEdit }: Props) {
     >
       <DataTable
         rows={routes}
-        onEdit={onEdit}
         onDelete={() => {}}
         columns={[
           { key: "id", label: "ID", render: (row) => row.id },

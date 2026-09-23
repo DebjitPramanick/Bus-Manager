@@ -42,23 +42,14 @@ export default function App() {
         </header>
 
         <section className="grid-layout">
-          <PassengersSection
-            onCreate={() => openModal("passenger")}
-            onEdit={() => openModal("passenger", "edit")}
-          />
+          <PassengersSection onCreate={() => openModal("passenger")} />
           <SlotsSection
             onAddSlot={() => openModal("slot")}
             onEditSlot={() => openModal("slot", "edit")}
           />
           <div className="col-layout">
-            <RoutesSection
-              onCreate={() => openModal("route")}
-              onEdit={() => openModal("route", "edit")}
-            />
-            <BusesSection
-              onCreate={() => openModal("bus")}
-              onEdit={() => openModal("bus", "edit")}
-            />
+            <RoutesSection onCreate={() => openModal("route")} />
+            <BusesSection onCreate={() => openModal("bus")} />
           </div>
         </section>
 
