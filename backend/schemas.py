@@ -1,4 +1,12 @@
+from datetime import datetime
+from typing import Callable
+from fastapi import Request, Response
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+class User(BaseModel):
+    id: int
+    username: str
 
 class Passenger(BaseModel):
     id: int
@@ -93,4 +101,11 @@ class PassengerAssign(BaseModel):
 class BusSlotStatus(BaseModel):
     filling_status: dict[int, list[int]]
     
+class Token(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
 
+class UserAuth(BaseModel):
+    username: str
+    password: str

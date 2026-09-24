@@ -5,6 +5,7 @@ from api.passengers import router as passengers_router
 from api.buses import router as buses_router
 from api.routes import router as routes_router
 from api.slots import router as slots_router
+from api.auth import router as auth_router
 import models
 from database import engine
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,5 +42,6 @@ api_router.include_router(passengers_router)
 api_router.include_router(buses_router)
 api_router.include_router(routes_router)
 api_router.include_router(slots_router)
+api_router.include_router(auth_router)
 
 app.include_router(api_router)
